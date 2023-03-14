@@ -1,9 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 // import Header from './components/Header/Header';
-import Header from '@components/Header/Header';
-import Footer from '@components/Footer/Footer';
-import Test from '@components/Test/Test';
+import RenderMainSlide from '@components/RenderMainSlide/RenderMainSlide';
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -11,11 +9,9 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Header />
         <Routes>
-          <Route path="/hello" element={<Test />} />
+          <Route path="/hello" element={<RenderMainSlide />} />
         </Routes>
-        <Footer />
       </BrowserRouter>
     </div>
   );
