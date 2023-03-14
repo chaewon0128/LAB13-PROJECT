@@ -1,0 +1,9 @@
+.mainSlide {
+    background-color: black;
+}
+
+.container {
+    overflow: hidden;
+    max-width: 100%;
+    margin: auto;
+}
