@@ -10,7 +10,7 @@ import banner01 from '../../assets/images/lovecatcher_03.jpg';
 SwiperCore.use([Mousewheel, A11y, Keyboard]);
 
 export default function RenderMainSlide() {
-  const TITLE = '티빙에만 있는 재미';
+  const TITLE = '타잉에만 있는 재미';
   const BOLDTEXT = '오리지널 콘텐츠를 만나보세요!';
   const TEXT = '차별화된 웰메이드 오리지널 콘텐츠';
 
@@ -20,8 +20,8 @@ export default function RenderMainSlide() {
       <div className="container">
         <Swiper
           style={{ height: '583px' }}
-          slidesPerView={3}
-          spaceBetween={24}
+          slidesPerView="auto"
+          spaceBetween={0}
           centeredSlides
           mousewheel
           keyboard={{
@@ -30,17 +30,33 @@ export default function RenderMainSlide() {
           modules={[Mousewheel, Keyboard]}
           className="mySwiper"
         >
-          <SwiperSlide>
-            <img src={banner01} alt='이미지' />
+          <SwiperSlide
+            style={{
+              marginLeft: '24px',
+            }}
+          >
+            <img src={banner01} alt="이미지" />
           </SwiperSlide>
-          <SwiperSlide>
-            <img src={banner01} alt='이미지' />
+          <SwiperSlide
+            style={{
+              marginLeft: '24px',
+            }}
+          >
+            <img src={banner01} alt="이미지" />
           </SwiperSlide>
-          <SwiperSlide>
-            <img src={banner01} alt='이미지' />
+          <SwiperSlide
+            style={{
+              marginLeft: '24px',
+            }}
+          >
+            <img src={banner01} alt="이미지" />
           </SwiperSlide>
-          <SwiperSlide>
-            <img src={banner01} alt='이미지' />
+          <SwiperSlide
+            style={{
+              marginLeft: '24px',
+            }}
+          >
+            <img src={banner01} alt="이미지" />
           </SwiperSlide>
         </Swiper>
       </div>
