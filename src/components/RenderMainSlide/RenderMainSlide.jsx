@@ -1,15 +1,33 @@
-import React from 'react';
+import React, { useLayoutEffect, useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import './RenderMainSlide.css';
 import SwiperCore, { A11y, Mousewheel, Keyboard } from 'swiper';
 import RenderText from './RenderText';
-import banner01 from '../../assets/images/lovecatcher_03.jpg';
+import useReadData from '../../utils/firebase/firestore/useReadData';
 
 SwiperCore.use([Mousewheel, A11y, Keyboard]);
 
 export default function RenderMainSlide() {
+  const { readData, data } = useReadData('image');
+  const baseUrl = '../src/assets/images/';
+  const rendingImg = useRef([]);
+  const bannerImg = useRef([]);
+
+  async function handleReadData() {
+    await readData();
+    // eslint-disable-next-line no-console
+    console.log('read');
+  }
+
+  useEffect(() => {
+    readData();
+    rendingImg.current = data.filter(img => img.src.banner);
+    bannerImg.current = rendingImg.current.slice(0, 4);
+    console.log(data);
+  },[]);
+
   const TITLE = '타잉에만 있는 재미';
   const BOLDTEXT = '오리지널 콘텐츠를 만나보세요!';
   const TEXT = '차별화된 웰메이드 오리지널 콘텐츠';
@@ -30,34 +48,21 @@ export default function RenderMainSlide() {
           modules={[Mousewheel, Keyboard]}
           className="mySwiper"
         >
-          <SwiperSlide
-            style={{
-              marginLeft: '24px',
-            }}
-          >
-            <img src={banner01} alt="이미지" />
-          </SwiperSlide>
-          <SwiperSlide
-            style={{
-              marginLeft: '24px',
-            }}
-          >
-            <img src={banner01} alt="이미지" />
-          </SwiperSlide>
-          <SwiperSlide
-            style={{
-              marginLeft: '24px',
-            }}
-          >
-            <img src={banner01} alt="이미지" />
-          </SwiperSlide>
-          <SwiperSlide
-            style={{
-              marginLeft: '24px',
-            }}
-          >
-            <img src={banner01} alt="이미지" />
-          </SwiperSlide>
+          {bannerImg.current.map(item => {
+            return (
+              <SwiperSlide
+                key={item.id}
+                style={{
+                  marginLeft: '24px',
+                }}
+              >
+                <img
+                  src={`${baseUrl}${item.src.banner}.jpg`}
+                  alt={`${item.name}`}
+                />
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </div>
     </div>
