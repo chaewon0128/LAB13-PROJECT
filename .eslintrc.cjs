@@ -23,5 +23,6 @@ module.exports = {
     'no-unused-vars': 'warn',
     'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'import/prefer-default-export': ['off', { target: 'single' }],
   },
 };

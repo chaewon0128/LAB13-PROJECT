@@ -42,6 +42,8 @@ export default function RenderMainSlide() {
           spaceBetween={0}
           centeredSlides
           mousewheel
+          releaseOnEdge
+          //마지막 슬라이더에서 스크롤 고정 해제
           keyboard={{
             enabled: true,
           }}
