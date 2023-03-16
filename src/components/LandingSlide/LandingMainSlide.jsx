@@ -1,32 +1,52 @@
-import React, { useLayoutEffect, useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import './RenderMainSlide.css';
+import './LandingMainSlide.css';
 import SwiperCore, { A11y, Mousewheel, Keyboard } from 'swiper';
-import RenderText from './RenderText';
+import { atom, useRecoilState } from 'recoil';
 import useReadData from '../../utils/firebase/firestore/useReadData';
+import LandingSlideTitle from './LandingSlideTitle';
 
 SwiperCore.use([Mousewheel, A11y, Keyboard]);
 
-export default function RenderMainSlide() {
+const localStorageEffect = key => {
+  return ({ setSelf, onSet }) => {
+    const savedValue = localStorage.getItem(key);
+    if (savedValue !== null) {
+      setSelf(JSON.parse(savedValue));
+    } else {
+      return undefined;
+    }
+    onSet((newValue, _, isRest) => {
+      localStorage.setItem(key, JSON.stringify(newValue));
+    });
+  };
+};
+
+const imageState = atom({
+  key: 'imageState',
+  default: null,
+  effects: [localStorageEffect('imageState')],
+});
+
+export default function LandingMainSlide() {
+  const [images, setImages] = useRecoilState(imageState);
   const { readData, data } = useReadData('image');
   const baseUrl = '../src/assets/images/';
-  const rendingImg = useRef([]);
+  const landingImg = useRef([]);
   const bannerImg = useRef([]);
 
-  async function handleReadData() {
-    await readData();
-    // eslint-disable-next-line no-console
-    console.log('read');
-  }
+  useLayoutEffect(() => {
+    (async () => {
+      if (!data && !images) {
+        await readData();
+        setImages(data);
+          console.log(images);
+      }
+    })();
+  }, [data, images, readData, setImages]);
 
-  useEffect(() => {
-    readData();
-    rendingImg.current = data.filter(img => img.src.banner);
-    bannerImg.current = rendingImg.current.slice(0, 4);
-    console.log(data);
-  },[]);
 
   const TITLE = '타잉에만 있는 재미';
   const BOLDTEXT = '오리지널 콘텐츠를 만나보세요!';
@@ -34,7 +54,7 @@ export default function RenderMainSlide() {
 
   return (
     <div className="mainSlide">
-      <RenderText title={TITLE} boldText={BOLDTEXT} text={TEXT} />
+      <LandingSlideTitle title={TITLE} boldText={BOLDTEXT} text={TEXT} />
       <div className="container">
         <Swiper
           style={{ height: '583px' }}
@@ -43,7 +63,7 @@ export default function RenderMainSlide() {
           centeredSlides
           mousewheel
           releaseOnEdge
-          //마지막 슬라이더에서 스크롤 고정 해제
+          // 마지막 슬라이더에서 스크롤 고정 해제
           keyboard={{
             enabled: true,
           }}

@@ -1,8 +1,8 @@
 import react from 'react';
-import style from './RenderText.module.css';
+import style from './LandingSlideTitle.module.css';
 
 // eslint-disable-next-line react/prop-types
-export default function RederText({ title, boldText, text }) {
+export default function LandingSlideTitle({ title, boldText, text }) {
   return (
     <div
       style={{

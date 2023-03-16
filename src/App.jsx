@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import RenderMainSlide from '@components/RenderMainSlide/RenderMainSlide';
+import LandingPage from './pages/Header/LandingPage';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/hello" element={<RenderMainSlide />} />
+          <Route path="/hello" element={<LandingPage />} />
         </Routes>
       </BrowserRouter>
     </div>
